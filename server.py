@@ -13,14 +13,12 @@ def generate_stats():
     username = request.form.get("username")
     theme = request.form.get("theme")
 
-    # Base URLs for each type of stat with default settings
     urls = {
         "general": f"https://github-readme-stats.vercel.app/api?username={username}&theme={theme}&show_icons=true&hide_border=true&count_private=true",  # General Stats
         "languages": f"https://github-readme-stats.vercel.app/api/top-langs/?username={username}&theme={theme}&show_icons=true&hide_border=true&layout=compact",  # Top Languages
         "profile": f"https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username={username}&theme={theme}&hide_border=true",  # Profile Details
     }
 
-    # Return URLs as JSON so they can be used by JavaScript on the client side
     return jsonify(urls)
 
 

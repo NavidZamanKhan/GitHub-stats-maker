@@ -1,87 +1,142 @@
-</html>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GitHub Stats Generator</title>
-    <script>
-        function showStatsOptions() {
-            // Hide all options initially
-            document.getElementById('top-langs-options').style.display = 'none';
-            document.getElementById('profile-details-options').style.display = 'none';
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #002b36, #073642);
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Allow content to start at the top */
+            min-height: 100vh; /* Use min-height to allow scrolling */
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow-y: auto; /* Enable vertical scrolling */
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
 
-            // Show selected options if not "General Stats"
-            const selectedStat = document.querySelector('input[name="stat_type"]:checked').value;
-            if (selectedStat === 'top_langs') {
-                document.getElementById('top-langs-options').style.display = 'block';
-            } else if (selectedStat === 'profile_details') {
-                document.getElementById('profile-details-options').style.display = 'block';
+        .container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .form-control,
+        .btn {
+            background-color: white;
+            color: #ffffff;
+            border: none;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background-color: #586e75;
+        }
+
+        .preview {
+            margin-top: 20px;
+            background-color: #073642;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .container{
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        
+    </style>
+    <script>
+        function updatePreview() {
+            const username = document.getElementById('username').value;
+            const theme = document.getElementById('theme').value;
+            if (username) {
+                document.getElementById('stats-preview').src = `https://github-readme-stats.vercel.app/api?username=${username}&theme=${theme}&show_icons=true&hide_border=true&count_private=true`;
+                document.getElementById('top-langs-preview').src = `https://github-readme-stats.vercel.app/api/top-langs/?username=${username}&theme=${theme}&layout=compact&hide_border=true`;
+                document.getElementById('profile-details-preview').src = `https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=${username}&theme=${theme}&hide_border=true`;
             }
+        }
+    </script>
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert("Link copied to clipboard!");
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
         }
     </script>
 </head>
 
 <body>
-    <h1>Customize Your GitHub Stats</h1>
-    <form action="/generate_stats" method="post">
-        <label>Select Stat Type:</label><br>
-        <input type="radio" name="stat_type" value="general" onclick="showStatsOptions()"> General Stats<br>
-        <input type="radio" name="stat_type" value="top_langs" onclick="showStatsOptions()"> Top Languages<br>
-        <input type="radio" name="stat_type" value="profile_details" onclick="showStatsOptions()"> Profile
-        Details<br><br>
+    <div class="container">
+        <h1>GitHub Stats Generator</h1>
+        <p>built for your convenience</p>
+        <p>
+            <a href="https://github.com/NavidZamanKhan">By Navid</a>
+        </p>
+        <form>
+            <div class="mb-3">
+                <label for="username" class="form-label">GitHub Username</label>
+                <input type="text" id="username" class="form-control" placeholder="Enter username"
+                    oninput="updatePreview()">
+            </div>
+            <div class="mb-3">
+                <label for="theme" class="form-label">Choose Theme</label>
+                <select id="theme" class="form-select" onchange="updatePreview()">
+                    <option value="default">Default</option>
+                    <option value="dark">Dark</option>
+                    <option value="radical">Radical</option>
+                    <option value="merko">Merko</option>
+                    <option value="gruvbox">Gruvbox</option>
+                    <option value="codeSTACKr">codeSTACKr</option>
+                    <option value="transparent">transparent</option>
+                    <option value="shadow_red">shadow_red</option>
+                    <option value="shadow_green">shadow_green</option>
+                    <option value="shadow_blue">shadow_blue</option>
+                    <option value="tokyonight">tokyonight</option>
+                    <option value="onedark">onedark</option>
+                    <option value="cobalt">cobalt</option>
+                    <option value="synthwave">synthwave</option>
+                    <option value="highcontrast">highcontrast</option>
+                    <option value="dracula">dracula</option>
+                    <option value="prussian">prussian</option>
+                    <option value="monokai">monokai</option>
+                    <option value="vue">vue</option>
+                    <option value="vue_dark">vue_dark</option>
+                    <option value="shades_of_purple">shades_of_purple</option>
+                    <option value="nightowl">nightowl</option>
+                    <option value="gotham">gotham</option>
+                    <option value="vision_friendly_dark">vision_friendly_dark</option>
+                    <option value="calm">calm</option>
+                    <option value="omni">omni</option>
+                    <option value="react">react</option>
+                    <option value="outrun">outrun</option>
+                    <!-- Other themes will be added here -->
+                </select>
+            </div>
+        </form>
 
-        <!-- Top Languages Options -->
-        <div id="top-langs-options" style="display:none;">
-            <label>Select Top Languages Options:</label><br>
-            <input type="checkbox" name="layout" value="compact"> Compact Layout<br><br>
+        <!-- Live Preview Section -->
+        <div class="preview">
+            <h5>Preview</h5>
+            <img id="stats-preview" src="" alt="General Stats Preview" style="width: 100%; margin-bottom: 10px;"
+                onclick="copyToClipboard('{{ url }}')">
+            <img id="top-langs-preview" src="" alt="Top Languages Preview" style="width: 100%; margin-bottom: 10px;"
+                onclick="copyToClipboard('{{ url }}')">
+            <img id="profile-details-preview" src="" alt="Profile Details Preview" style="width: 100%;"
+                onclick="copyToClipboard('{{ url }}')">
         </div>
-
-        <!-- Profile Details Options -->
-        <div id="profile-details-options" style="display:none;">
-            <label>Profile Details Customizations:</label><br>
-            <input type="checkbox" name="details" value="show_icons"> Show Icons<br>
-            <input type="checkbox" name="details" value="hide_border"> Hide Border<br><br>
-        </div>
-
-        <label for="username">GitHub Username:</label>
-        <input type="text" id="username" name="username" required><br><br>
-
-        <label for="theme">Choose Theme:</label>
-        <select id="theme" name="theme">
-            <option value="default">Default</option>
-            <option value="dark">Dark</option>
-            <option value="radical">Radical</option>
-            <option value="merko">Merko</option>
-            <option value="gruvbox">Gruvbox</option>
-            <option value="codeSTACKr">codeSTACKr</option>
-            <option value="transparent">transparent</option>
-            <option value="shadow_red">shadow_red</option>
-            <option value="shadow_green"">shadow_green</option>
-            <option value=" shadow_blue">shadow_blue</option>
-            <option value="tokyonight">tokyonight</option>
-            <option value="onedark">onedark</option>
-            <option value="cobalt">cobalt</option>
-            <option value="synthwave">synthwave</option>
-            <option value="highcontrast">highcontrast</option>
-            <option value="dracula">dracula</option>
-            <option value="prussian">prussian</option>
-            <option value="monokai">monokai</option>
-            <option value="vue">vue</option>
-            <option value="vue_dark">vue_dark</option>
-            <option value="shades_of_purple">shades_of_purple</option>
-            <option value="nightowl">nightowl</option>
-            <option value="gotham">gotham</option>
-            <option value="vision_friendly_dark">vision_friendly_dark</option>
-            <option value="calm">calm</option>
-            <option value="omni">omni</option>
-            <option value="react">react</option>
-            <option value="outrun">outrun</option>
-        </select><br><br>
-
-        <button type="submit">Generate Stats</button>
-    </form>
+    </div>
 </body>
 
 </html>

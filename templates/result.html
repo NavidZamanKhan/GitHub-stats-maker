@@ -15,7 +15,7 @@
     <script>
         function copyToClipboard(text) {
             navigator.clipboard.writeText(text).then(() => {
-                alert("Copied to clipboard!");
+                alert("Link copied to clipboard!");
             }).catch(err => {
                 console.error('Failed to copy text: ', err);
             });
@@ -26,12 +26,9 @@
 <body>
     <h1>Your GitHub Stats</h1>
     {% for url in stat_urls %}
-    <img src="{{ url }}" alt="GitHub Stats" style="width: 100%; max-width: 500px;">
-    <p>
-        <code>{{ url }}</code>
-        <span class="copy-icon" onclick="copyToClipboard('{{ url }}')">📋 Copy</span>
-    </p>
-    <br>
+    <img src="{{ url }}" alt="GitHub Stats" style="width: 100%; max-width: 500px; cursor: pointer;"
+        onclick="copyToClipboard('{{ url }}')">
+    <br><br>
     {% endfor %}
     <a href="/">Back</a>
 </body>

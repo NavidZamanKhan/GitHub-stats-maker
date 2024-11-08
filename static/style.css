@@ -57,3 +57,16 @@
         margin-bottom: 15px;
     }
 }
+
+input[type="text"] {
+    color: #000;
+    /* Black text color */
+    background-color: #fff;
+    /* Ensure a light background for visibility */
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border: 2px solid #007bff;
+    /* Optional focus style */
+}

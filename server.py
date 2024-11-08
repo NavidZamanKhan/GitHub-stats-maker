@@ -20,9 +20,7 @@ def generate_stats():
     if stat_type == "general":
         # Automatically include all general stats without displaying checkboxes
         general_stats = [
-            f"{base_url}?username={username}&theme={theme}&show_icons=true&hide_border=true&count_private=true",
-            f"{base_url}/top-langs/?username={username}&theme={theme}&show_icons=true&hide_border=true&layout=compact",
-            f"https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username={username}&theme={theme}",
+            f'<img id="profile-details" src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username={username}&theme={theme}" alt="Profile Details" style="width: 100%;">'
         ]
         urls.extend(general_stats)
 

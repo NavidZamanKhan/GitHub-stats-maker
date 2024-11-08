@@ -28,7 +28,7 @@
     {% for url in stat_urls %}
     <img src="{{ url }}" alt="GitHub Stats" style="width: 100%; max-width: 500px;">
     <p>
-        <code>{{ url }}</code>
+        <code>{{ '<img src=" ' + url + ' ">' }}</code>
         <span class="copy-icon" onclick="copyToClipboard('{{ url }}')">📋 Copy</span>
     </p>
     <br>
